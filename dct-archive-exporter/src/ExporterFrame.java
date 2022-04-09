@@ -52,7 +52,8 @@ public class ExporterFrame{
         JRadioButton csv_button = new JRadioButton("CSV"); //.csv format
         JRadioButton xls_button = new JRadioButton("XLS"); //.xls format
         JRadioButton txt_button = new JRadioButton("TXT"); //.txt format
-        file_type_panel.add(csv_button); file_type_panel.add(xls_button); file_type_panel.add(txt_button);
+        JRadioButton sql_button = new JRadioButton("SQL"); //.sql format
+        file_type_panel.add(csv_button); file_type_panel.add(xls_button); file_type_panel.add(txt_button);  file_type_panel.add(sql_button);
 
         JRadioButton photo_lib_button = new JRadioButton("Photo lib");
         JRadioButton publi_lib_button = new JRadioButton("Publications");
