@@ -1,6 +1,8 @@
-
 public class Photo {
     
+    //SUMMARY
+    //Photo objects are used to hold records from the photo table
+
     private int photo_id;    //primary key
     private int pub_id;      //foreign key
     private java.util.Date date;

@@ -13,17 +13,13 @@ import java.util.List;
 //Connects to the sqlite database to import the data
 
 public class Connect {
-    
-    private Date parse;
 
     public Object[][] getPhotoData(){
         
         try { //attempt connection
         
             Connection conn = connect(); //establish db connection
-
             String photo_sql = "SELECT * FROM photo";
-            String publi_sql = "SELECT * FROM publication";
 
             Statement row_statement = conn.createStatement(); //get the number of rows
             ResultSet row_result = row_statement.executeQuery("SELECT COUNT(*) AS row_count FROM photo");
@@ -32,7 +28,7 @@ public class Connect {
             row_result.close();
 
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery(photo_sql); //TODO : need to be able to export both tables
+            ResultSet rs = stm.executeQuery(photo_sql); //query the photo table
             ResultSetMetaData rsmd = rs.getMetaData();
             int column_count = rsmd.getColumnCount();
 
@@ -68,6 +64,50 @@ public class Connect {
             System.out.println(e.getMessage());
         }
         return null; //should be unreachable
+    }
+
+    public Object[][] getPublicationData(){ //publication table variant of the getPhotoData method
+
+        try{
+            Connection conn = connect(); //establish db connection
+            String publi_sql = "SELECT * FROM publication";
+
+            Statement row_statement = conn.createStatement(); //get the number of rows
+            ResultSet row_result = row_statement.executeQuery("SELECT COUNT(*) AS row_count FROM publication");
+            row_result.next();
+            int row_count = row_result.getInt("row_count");
+            row_result.close();
+
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(publi_sql); //query the publication table
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int column_count = rsmd.getColumnCount();
+
+            Object[][] data_arr = new Object[row_count][column_count];
+            List<Publication> publi_list = new ArrayList<Publication>();
+
+            while(rs.next()){
+                Publication pub = new Publication();
+
+                pub.setPubli_id(rs.getInt(1));    //populate object
+                pub.setShortcode(rs.getString(2));
+                pub.setName(rs.getString(3));
+
+                publi_list.add(pub); //add this object to list 
+            }
+
+            for(int i=0; i<publi_list.size(); i++){
+                Publication reader = publi_list.get(i); //access each obj in the list
+
+                data_arr[i][0] = reader.getPubli_id();
+                data_arr[i][1] = reader.getShortcode();
+                data_arr[i][2] = reader.getName();
+            }
+            return data_arr;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     private static Connection connect(){

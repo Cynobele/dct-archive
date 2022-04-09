@@ -80,13 +80,26 @@ public class ExporterFrame{
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Connect connect = new Connect();
                 System.out.println("getting photo data...");
-                Object[][] photo_data = connect.getPhotoData();
-                
+
+                //-----------SUMMARY
+                //Each block here will import a different table.
+                //Uncomment the block that you want to export, and comment the other
+                // TODO : check which radio button is active, and only export that table
+
+                /*Object[][] photo_data = connect.getPhotoData(); //photo block
                 for(int i=0; i<photo_data.length; i++){
                     for(int j=0; j<6; j++){
                         System.out.println(photo_data[i][j]);
                     }
                     System.out.println("\n");
+                }*/
+
+                Object[][] publication_data = connect.getPublicationData(); //publication block
+                for(int i=0; i<publication_data.length; i++){
+                    for(int j=0; j<3; j++){
+                        System.out.println(publication_data[i][j]);
+                    }
+                    System.out.println("\n");;
                 }
             }
         });
