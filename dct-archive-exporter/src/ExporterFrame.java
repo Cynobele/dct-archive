@@ -19,6 +19,7 @@ public class ExporterFrame{
     //instantiates all items on the main_frame
     public void DisplayContent(JFrame main_frame){
 
+        //region - Instantiate and display content
         Dimension panel_dimension = new Dimension(400, 50);
 
         //content_view_panel holds the other 2 sub panels
@@ -71,5 +72,21 @@ public class ExporterFrame{
         //add content_view_panel to main_frame, and toggle visibility. this displays everything above
         main_frame.add(content_view_panel);
         main_frame.setVisible(true);
+        //endregion
+    
+        confirm_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Connect connect = new Connect();
+                System.out.println("getting photo data...");
+                Object[][] photo_data = connect.getPhotoData();
+                
+                for(int i=0; i<photo_data.length; i++){
+                    for(int j=0; j<6; j++){
+                        System.out.println(photo_data[i][j]);
+                    }
+                    System.out.println("\n");
+                }
+            }
+        });
     }
 }
