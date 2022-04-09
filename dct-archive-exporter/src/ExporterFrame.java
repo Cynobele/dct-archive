@@ -89,27 +89,24 @@ public class ExporterFrame{
                     System.out.println("\n");
                 }
             }
+        });
 
         browse_button.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e){
+                JFileChooser j = new JFileChooser();    //set up filechooser
 
-            public void actionPerformed(java.awt.event.ActionEvent e)
+                j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  //set to only save directories, not files 
+                j.setCurrentDirectory(new File(System.getProperty("user.home")));   //set starting directory to user home
+
+                int result = j.showSaveDialog(main_frame);  //show dialog
+
+                if (result == JFileChooser.APPROVE_OPTION)  //once user hits save
                 {
-                        JFileChooser j = new JFileChooser();    //set up filechooser
+                    File file = j.getSelectedFile();    //get the directory they chose
 
-                        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  //set to only save directories, not files 
-                        j.setCurrentDirectory(new File(System.getProperty("user.home")));   //set starting directory to user home
-
-                        int result = j.showSaveDialog(main_frame);  //show dialog
-
-                        if (result == JFileChooser.APPROVE_OPTION)  //once user hits save
-                        {
-                            File file = j.getSelectedFile();    //get the directory they chose
-
-                            export_location.setText(file.toString());   //add directory to text box
-                        }
-                    
-
+                    export_location.setText(file.toString());   //add directory to text box
                 }
+            }    
         });
     }
 }
