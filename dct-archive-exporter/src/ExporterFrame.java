@@ -11,6 +11,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import java.awt.Dimension;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 public class ExporterFrame{
 
@@ -73,7 +75,7 @@ public class ExporterFrame{
         main_frame.add(content_view_panel);
         main_frame.setVisible(true);
         //endregion
-    
+
         confirm_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Connect connect = new Connect();
@@ -87,6 +89,27 @@ public class ExporterFrame{
                     System.out.println("\n");
                 }
             }
+
+        browse_button.addActionListener(new java.awt.event.ActionListener(){
+
+            public void actionPerformed(java.awt.event.ActionEvent e)
+                {
+                        JFileChooser j = new JFileChooser();    //set up filechooser
+
+                        j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  //set to only save directories, not files 
+                        j.setCurrentDirectory(new File(System.getProperty("user.home")));   //set starting directory to user home
+
+                        int result = j.showSaveDialog(main_frame);  //show dialog
+
+                        if (result == JFileChooser.APPROVE_OPTION)  //once user hits save
+                        {
+                            File file = j.getSelectedFile();    //get the directory they chose
+
+                            export_location.setText(file.toString());   //add directory to text box
+                        }
+                    
+
+                }
         });
     }
 }

@@ -2,8 +2,8 @@ import javax.swing.JFrame;
 import java.awt.*;
 
 // DCT Archive project | Data exporter
-// Authors: Cameron Harrison, Max Clow, Jannes Blume
-// April 2022
+//Authors - Cameron Harrison, Jannes Blume, Max Clow
+//April 2022
 
 public class App {
     public static void main(String[] args) throws Exception {
