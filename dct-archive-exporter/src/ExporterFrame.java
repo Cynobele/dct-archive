@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
 import java.awt.Dimension;
 
 public class ExporterFrame{
@@ -26,11 +27,16 @@ public class ExporterFrame{
         content_view_panel.setSize(main_frame.WIDTH, main_frame.HEIGHT); //fill the frame
 
 
-        //radio_button_panel holds the radio buttons that select the desired file type
-        JPanel radio_button_panel = new JPanel();
-        //radio_button_panel.setLayout(new BoxLayout(radio_button_panel, BoxLayout.X_AXIS));
-        radio_button_panel.setMaximumSize(panel_dimension);
-        radio_button_panel.setBorder(BorderFactory.createTitledBorder("Export file type"));
+        //file_type_panel holds the radio buttons that select the desired file type
+        JPanel file_type_panel = new JPanel();
+        file_type_panel.setMaximumSize(panel_dimension);
+        file_type_panel.setBorder(BorderFactory.createTitledBorder("Export file type"));
+
+
+        //table_select_panel holds radio buttons to select which of the db tables to export
+        JPanel table_select_panel = new JPanel();
+        table_select_panel.setMaximumSize(panel_dimension);
+        table_select_panel.setBorder(BorderFactory.createTitledBorder("Select table to export"));
 
 
         //location_panel holds the selector allowing an export location to be selected
@@ -43,16 +49,22 @@ public class ExporterFrame{
         JRadioButton csv_button = new JRadioButton("CSV"); //.csv format
         JRadioButton xls_button = new JRadioButton("XLS"); //.xls format
         JRadioButton txt_button = new JRadioButton("TXT"); //.txt format
-        radio_button_panel.add(csv_button); radio_button_panel.add(xls_button); radio_button_panel.add(txt_button);
+        file_type_panel.add(csv_button); file_type_panel.add(xls_button); file_type_panel.add(txt_button);
+
+        JRadioButton photo_lib_button = new JRadioButton("Photo lib");
+        JRadioButton publi_lib_button = new JRadioButton("Publications");
+        table_select_panel.add(photo_lib_button); table_select_panel.add(publi_lib_button);
 
         JButton browse_button = new JButton("Browse"); //selects an export location
         JTextField export_location = new JTextField();
         location_panel.add(browse_button); location_panel.add(export_location);
 
+        //confirms selections made and exports the file
         JButton confirm_button = new JButton("Export");
 
         //add sub panels to the content_view_panel
-        content_view_panel.add(radio_button_panel);
+        content_view_panel.add(file_type_panel);
+        content_view_panel.add(table_select_panel);
         content_view_panel.add(location_panel);
         content_view_panel.add(confirm_button);
         

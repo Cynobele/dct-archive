@@ -2,6 +2,8 @@ import javax.swing.JFrame;
 import java.awt.*;
 
 // DCT Archive project | Data exporter
+// Authors: Cameron Harrison, Max Clow, Jannes Blume
+// April 2022
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -15,7 +17,7 @@ public class App {
 
         JFrame main_frame = new JFrame("DCT Archive Exporter");    //Instantiate main window
         main_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Make program exit on window close
-        main_frame.setBounds((screen_width/2)-250, (screen_height/2)-120, 500, 175);//Set window size and pos
+        main_frame.setBounds((screen_width/2)-250, (screen_height/2)-120, 500, 250);//Set window size and pos
 
         ExporterFrame exp_frame = new ExporterFrame();
         while(_running){
