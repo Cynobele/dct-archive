@@ -21,7 +21,7 @@ import javax.swing.JFileChooser;
 public class ExporterFrame{
 
     //for detecting which of the radio buttons is selected on each panel
-    public enum RADIO_BUTTON{NONE, CSV,XLS,TXT,SQL, PHOTO, PUBLICATION}
+    public enum RADIO_BUTTON{NONE, CSV,XLSX,TXT,SQL, PHOTO, PUBLICATION}
 
     //SUMMARY
     //main function for this class
@@ -57,12 +57,12 @@ public class ExporterFrame{
         location_panel.setBorder(BorderFactory.createTitledBorder("Export to..."));
 
         JRadioButton csv_button = new JRadioButton("CSV"); //.csv format
-        JRadioButton xls_button = new JRadioButton("XLS"); //.xls format
+        JRadioButton xlsx_button = new JRadioButton("XLS"); //.xls format
         JRadioButton txt_button = new JRadioButton("TXT"); //.txt format
         JRadioButton sql_button = new JRadioButton("SQL"); //.sql format
         ButtonGroup type_group = new ButtonGroup();     //group buttons together
-        type_group.add(csv_button); type_group.add(xls_button); type_group.add(txt_button);  type_group.add(sql_button);
-        file_type_panel.add(csv_button); file_type_panel.add(xls_button); file_type_panel.add(txt_button);  file_type_panel.add(sql_button);
+        type_group.add(csv_button); type_group.add(xlsx_button); type_group.add(txt_button);  type_group.add(sql_button);
+        file_type_panel.add(csv_button); file_type_panel.add(xlsx_button); file_type_panel.add(txt_button);  file_type_panel.add(sql_button);
 
         JRadioButton photo_lib_button = new JRadioButton("Photo lib");
         JRadioButton publi_lib_button = new JRadioButton("Publications");
@@ -103,7 +103,7 @@ public class ExporterFrame{
                 
                 if(type_selection != RADIO_BUTTON.NONE && type_selection != null){
                     type_ready = true;
-                    JOptionPane.showMessageDialog(alert, type_selection+" selected!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(alert, type_selection+" selected!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
                     JOptionPane.showMessageDialog(alert, "You must select a file type!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -138,7 +138,9 @@ public class ExporterFrame{
                             csve.WriteFile(data, export_location.getText(), table_selection);
                             break;
 
-                        case XLS:
+                        case XLSX:
+                            XLSXExporter xslxe = new XLSXExporter();
+                            xslxe.WriteFile(data, export_location.getText(), table_selection);
                             break;
 
                         case SQL:
@@ -205,7 +207,7 @@ public class ExporterFrame{
                     break;
 
                     case "XLS":
-                        selected = RADIO_BUTTON.XLS;
+                        selected = RADIO_BUTTON.XLSX;
                     break;
                     
                     case "TXT":
