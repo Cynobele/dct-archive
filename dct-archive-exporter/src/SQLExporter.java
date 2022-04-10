@@ -1,100 +1,134 @@
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter; 
-import java.io.IOException; 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SQLExporter {
     
-    public void copyFile(File from, File to) throws IOException
+    public void copyFile(File from, File to)
     {
+        try {
             Files.copy( from.toPath(), to.toPath() );
+            
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public void duplicateRecords(String exportlocation) throws IOException
+    public void duplicateRecords(String exportlocation)
     {
-        File dirFrom = new File("lib\\Records.sql");
+        
+        File dirFrom = new File("dct-archive-exporter\\lib\\Records.sql");
         File dirTo = new File(exportlocation + "\\Records.sql");
-
-        
-        copyFile(dirFrom, dirTo);
+            
+            copyFile(dirFrom, dirTo);
         
     }
 
-    public void duplicatePublications(String exportlocation) throws IOException
+    public void duplicatePublications(String exportlocation)
     {
-        File dirFrom = new File("lib\\Publications.sql");
+        File dirFrom = new File("dct-archive-exporter\\lib\\Publications.sql");
         File dirTo = new File(exportlocation + "\\Publications.sql");
 
-        
         copyFile(dirFrom, dirTo);
-        
     }
 
 
-    public void exportRecords(String exportlocation, Object publication_data) throws IOException 
+
+    public void exportRecords(String exportlocation, Object[][] table_data)
     {
-        //Alternative method if own doesn't work
-        
-        //FileWriter fw = null; 
-        //BufferedWriter bw = null; 
-        //PrintWriter pw = null;
-
-        //fw = new FileWriter("lib\\Records.sql", true); 
-        //bw = new BufferedWriter(fw); 
-        //pw = new PrintWriter(bw);
-
-
-        //while (data.read())
-        //{
-            //pw.println("(" + data[0] + ", " + data[1] + ", " + data[3]);
-
-        //}
-
-        
-        FileWriter fw = new FileWriter(exportlocation + "\\Records.sql", true); //the true will append the new data
+       
+        try (FileWriter fw = new FileWriter(exportlocation + "\\Records.sql", true);
         BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter pw = new PrintWriter(bw))
+        {
+        
+        for (int i=0; i<table_data.length; i++)
+        {
+            if (i == 0)
+            {
+                pw.println(System.lineSeparator());
+            }
 
-        //TO DO
-        //while (publication_data.read)
-        //{
-        //    bw.write("(" + publication_data[0] + ", " + publication_data[1] + ", '" + publication_data[2] + "', '" + publication_data[3] + "', '" + publication_data[4] + "', '" + publication_data[5] + "'),");//appends the string to the file
-        //}
+            String caption = table_data[i][5].toString();
+            caption = caption.replace("\"","\\\"");
+            caption = caption.replace("\'","\\\'");
 
-        bw.write("");
-        bw.write("--Indexes for table 'Records'");
-        bw.write("ALTER TABLE 'Records'");
-        bw.write("ADD PRIMARY KEY ('PhotoID');");
-        bw.write("");
-        bw.write("--Constraints for table 'Records'");
-        bw.write("ALTER TABLE 'Records'");
-        bw.write("ADD CONSTRAINT 'Records_ibfk_1' FOREIGN KEY ('PubID') REFERENCES 'Publications' ('PubID');");
+            if (i != (table_data.length - 1))
+            {
+                pw.println("(" + table_data[i][0] + ", " + table_data[i][1] + ", \"" + table_data[i][2] + "\", \"" + table_data[i][3] + "\", \"" + table_data[i][4] + "\", \"" + caption + "\"),");//appends the string to the file
+            }
+            else
+            {
+                pw.println("(" + table_data[i][0] + ", " + table_data[i][1] + ", \"" + table_data[i][2] + "\", \"" + table_data[i][3] + "\", \"" + table_data[i][4] + "\", \"" + caption + "\");");//appends the string to the file
+            }
+        }
 
+        pw.println(System.lineSeparator());
+        pw.println("ALTER TABLE `Records`");
+        pw.println("ADD PRIMARY KEY (`PhotoID`);");
+        
         bw.close();
         fw.close();
-       
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+    
     }
 
-    public void exportPublications(String exportlocation, Object publication_data) throws IOException 
+    public void exportPublications(String exportlocation, Object[][] table_data)
     {
                 
-        FileWriter fw = new FileWriter(exportlocation + "\\Publications.sql", true); //the true will append the new data
+        try (FileWriter fw = new FileWriter(exportlocation + "\\Publications.sql", true); 
         BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter pw = new PrintWriter(bw))
+        {
+        
 
+        for (int i=0; i<table_data.length; i++)
+        {
+            if (i == 0)
+            {
+                pw.println(System.lineSeparator());
+            }
 
-        //TO DO
-        //while (publication_data.read)
-        //{
-        //    bw.write("(" + publication_data[0] + ", " + publication_data[1] + ", '" + publication_data[2] + "', '" + publication_data[3] + "', '" + publication_data[4] + "', '" + publication_data[5] + "'),");//appends the string to the file
-        //}
+            String caption = table_data[i][2].toString();
+            caption = caption.replace("\"","\\\"");
+            caption = caption.replace("\'","\\\'");
 
-        bw.write("");
-        bw.write("--Indexes for table 'Records'");
-        bw.write("ALTER TABLE 'Publications'");
-        bw.write("ADD PRIMARY KEY ('PubID');");
+            if (i != (table_data.length - 1))
+            {
+                pw.println("(" + table_data[i][0] + ", \"" + table_data[i][1] + "\", \"" + table_data[i][2] + "\"),");//appends the string to the file
+            }
+            else
+            {
+                pw.println("(" + table_data[i][0] + ", \"" + table_data[i][1] + "\", \"" + table_data[i][2] + "\");");//appends the string to the file
+            }
+        }
+
+        pw.println(System.lineSeparator());
+        pw.println("ALTER TABLE `Publications`");
+        pw.println("ADD PRIMARY KEY (`PubID`);");
 
         bw.close();
         fw.close();
-       
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
