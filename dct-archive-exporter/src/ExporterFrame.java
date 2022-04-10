@@ -1,20 +1,26 @@
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.io.File;
+import java.util.Enumeration;
+import javax.swing.JFileChooser;
+
 /* SUMMARY
     -Handles the UI (buttons, panels etc) for the ExporterFrame
     -Is called by App to display
 */
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
-import java.awt.Dimension;
-import java.io.File;
-import javax.swing.JFileChooser;
-
 public class ExporterFrame{
+
+    //for detecting which of the radio buttons is selected on each panel
+    public enum RADIO_BUTTON{NONE, CSV,XLS,TXT,SQL, PHOTO, PUBLICATION}
 
     //SUMMARY
     //main function for this class
@@ -53,10 +59,14 @@ public class ExporterFrame{
         JRadioButton xls_button = new JRadioButton("XLS"); //.xls format
         JRadioButton txt_button = new JRadioButton("TXT"); //.txt format
         JRadioButton sql_button = new JRadioButton("SQL"); //.sql format
+        ButtonGroup type_group = new ButtonGroup();     //group buttons together
+        type_group.add(csv_button); type_group.add(xls_button); type_group.add(txt_button);  type_group.add(sql_button);
         file_type_panel.add(csv_button); file_type_panel.add(xls_button); file_type_panel.add(txt_button);  file_type_panel.add(sql_button);
 
         JRadioButton photo_lib_button = new JRadioButton("Photo lib");
         JRadioButton publi_lib_button = new JRadioButton("Publications");
+        ButtonGroup table_group = new ButtonGroup();
+        table_group.add(photo_lib_button);table_group.add(publi_lib_button);
         table_select_panel.add(photo_lib_button); table_select_panel.add(publi_lib_button);
 
         JButton browse_button = new JButton("Browse"); //selects an export location
@@ -79,28 +89,44 @@ public class ExporterFrame{
 
         confirm_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+
                 Connect connect = new Connect();
-                System.out.println("getting photo data...");
+                
+                System.out.println("Getting table data...");
+                RADIO_BUTTON type_selection = GetSelectedRadio(type_group);
+                RADIO_BUTTON table_selection = GetSelectedRadio(table_group);
+                Boolean type_ready = false, table_ready = false; //true when the program has all data it needs to export
 
-                //-----------SUMMARY
-                //Each block here will import a different table.
-                //Uncomment the block that you want to export, and comment the other
-                // TODO : check which radio button is active, and only export that table
+                JOptionPane alert = new JOptionPane(); //popup window for user messages
+                
+                if(type_selection != RADIO_BUTTON.NONE && type_selection != null){
+                    type_ready = true;
+                    JOptionPane.showMessageDialog(alert, type_selection+" selected!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(alert, "You must select a file type!", "Error", JOptionPane.ERROR_MESSAGE);
+                    type_ready = false;
+                }
 
-                /*Object[][] photo_data = connect.getPhotoData(); //photo block
-                for(int i=0; i<photo_data.length; i++){
-                    for(int j=0; j<6; j++){
-                        System.out.println(photo_data[i][j]);
-                    }
-                    System.out.println("\n");
-                }*/
+                switch(table_selection){ //import the correct table
+                    case NONE:
+                        JOptionPane.showMessageDialog(alert, "You must select a table!", "Error", JOptionPane.ERROR_MESSAGE);
+                        table_ready = false;
+                    break;
 
-                Object[][] publication_data = connect.getPublicationData(); //publication block
-                for(int i=0; i<publication_data.length; i++){
-                    for(int j=0; j<3; j++){
-                        System.out.println(publication_data[i][j]);
-                    }
-                    System.out.println("\n");;
+                    case PHOTO:
+                        Object[][] photo_data = connect.getPhotoData(); //2D array holding photo table
+                        table_ready = true;
+                    break;
+                    
+                    case PUBLICATION:
+                        Object[][] publication_data = connect.getPublicationData(); //2D array holding publication table
+                        table_ready = true;
+                    break;
+                    
+                    default:
+                        table_ready = false;
+                        break;
                 }
             }
         });
@@ -122,5 +148,53 @@ public class ExporterFrame{
                 }
             }    
         });
+    }
+
+    //SUMMARY
+    //Takes the radio button group that you want to check as parameter
+    //Returns an enum value representing which radio button in the group was selected
+    public RADIO_BUTTON GetSelectedRadio(ButtonGroup x){
+        Enumeration<AbstractButton> group = x.getElements();
+        RADIO_BUTTON selected;
+        String token;
+
+        while(group.hasMoreElements()){ //cycle through the group to check each button
+            
+            JRadioButton temp = (JRadioButton)group.nextElement();
+            if(temp.isSelected()){
+                token = temp.getText(); //Get the text value from the button for switch case
+                switch(token){
+
+                    case "CSV":
+                        selected = RADIO_BUTTON.CSV;
+                    break;
+
+                    case "XLS":
+                        selected = RADIO_BUTTON.XLS;
+                    break;
+                    
+                    case "TXT":
+                        selected = RADIO_BUTTON.TXT;
+                    break;
+
+                    case "SQL":
+                        selected = RADIO_BUTTON.SQL;
+                    break;
+
+                    case "Photo lib":
+                        selected = RADIO_BUTTON.PHOTO;
+                    break;
+
+                    case "Publications":
+                        selected = RADIO_BUTTON.PUBLICATION;
+                    break;
+
+                    case default:
+                        selected = RADIO_BUTTON.NONE; //no selection has been made in this group
+                }
+                return selected;
+            }
+        }
+        return RADIO_BUTTON.NONE;
     }
 }

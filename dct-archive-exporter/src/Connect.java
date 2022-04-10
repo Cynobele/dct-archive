@@ -125,5 +125,4 @@ public class Connect {
         return conn;
     }
 
-    //TODO : add method for extracting data
 }
