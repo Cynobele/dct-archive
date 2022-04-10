@@ -1,3 +1,4 @@
+import javax.lang.model.util.ElementScanner6;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -141,6 +142,17 @@ public class ExporterFrame{
                             break;
 
                         case SQL:
+                            SQLExporter sqle = new SQLExporter();
+                            if (table_selection == ExporterFrame.RADIO_BUTTON.PHOTO)
+                            {
+                                sqle.duplicateRecords(export_location.getText());
+                                sqle.exportRecords(export_location.getText(), data);
+                            }
+                            else
+                            {
+                                sqle.duplicatePublications(export_location.getText());
+                                sqle.exportPublications(export_location.getText(), data);
+                            }
                             break;
 
                         case TXT:
