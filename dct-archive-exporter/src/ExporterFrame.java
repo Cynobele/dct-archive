@@ -96,6 +96,7 @@ public class ExporterFrame{
                 RADIO_BUTTON type_selection = GetSelectedRadio(type_group);
                 RADIO_BUTTON table_selection = GetSelectedRadio(table_group);
                 Boolean type_ready = false, table_ready = false; //true when the program has all data it needs to export
+                Object[][] data = null;
 
                 JOptionPane alert = new JOptionPane(); //popup window for user messages
                 
@@ -115,18 +116,40 @@ public class ExporterFrame{
                     break;
 
                     case PHOTO:
-                        Object[][] photo_data = connect.getPhotoData(); //2D array holding photo table
+                        data = connect.getPhotoData(); //2D array holding photo table
                         table_ready = true;
                     break;
                     
                     case PUBLICATION:
-                        Object[][] publication_data = connect.getPublicationData(); //2D array holding publication table
+                        data = connect.getPublicationData(); //2D array holding publication table
                         table_ready = true;
                     break;
                     
                     default:
                         table_ready = false;
                         break;
+                }
+
+                if(table_ready && type_ready){ //BOTH table and file_type have been selected
+                    switch(type_selection){
+                        case CSV:
+                            CSVExporter csve = new CSVExporter();
+                            csve.WriteFile(data, export_location.getText(), table_selection);
+                            break;
+
+                        case XLS:
+                            break;
+
+                        case SQL:
+                            break;
+
+                        case TXT:
+                            break;
+
+                        default:
+                            break;
+                        
+                    }
                 }
             }
         });
