@@ -9,7 +9,7 @@ public class CSVExporter {
     //file_path is the location selected by the user
     //table is the selected table to export
     public void WriteFile(Object[][] table_data, String file_path, ExporterFrame.RADIO_BUTTON table){
-        String file_name = "/DCTArchiveExport.csv";
+        String file_name = "/" + table.toString()+ "_DCTArchiveExport.csv";
         File file = new File(file_path + file_name);
         
         if(!file.exists()){
