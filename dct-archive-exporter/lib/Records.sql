@@ -19,13 +19,3 @@ CREATE TABLE IF NOT EXISTS 'Records' (
 
 INSERT INTO 'Records' ('PhotoID', 'PubID', 'Date', 'Reference', 'Location', 'Caption') VALUES
 --This is where the program loops over the data and inserts on lines (remember to add a line counter to increment after each write)
-
-
-
---Indexes for table 'Records'
-ALTER TABLE 'Records'
-    ADD PRIMARY KEY ('PhotoID');
-
---Constraints for table 'Records
-ALTER TABLE 'Records'
-    ADD CONSTRAINT 'Records_ibfk_1' FOREIGN KEY ('PubID') REFERENCES 'Publications' ('PubID');

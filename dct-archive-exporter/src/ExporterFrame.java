@@ -189,7 +189,7 @@ public class ExporterFrame{
                         selected = RADIO_BUTTON.PUBLICATION;
                     break;
 
-                    case default:
+                    default:
                         selected = RADIO_BUTTON.NONE; //no selection has been made in this group
                 }
                 return selected;

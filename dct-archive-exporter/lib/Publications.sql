@@ -16,9 +16,3 @@ CREATE TABLE IF NOT EXISTS 'Publications' (
 
 INSERT INTO 'Publications' ('PubID', 'Shortcode', 'Name') VALUES
 --This is where the program loops over the data and inserts on lines (remember to add a line counter to increment after each write)
-
-
-
---Adding Primary Key
-ALTER TABLE 'Publications'
-    ADD PRIMARY KEY ('PubID');
