@@ -1,4 +1,3 @@
-import javax.lang.model.util.ElementScanner6;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
