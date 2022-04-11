@@ -214,7 +214,7 @@ public class ExporterFrame{
                         selected = RADIO_BUTTON.CSV;
                     break;
 
-                    case "XLS":
+                    case "XLSX":
                         selected = RADIO_BUTTON.XLSX;
                     break;
                     
