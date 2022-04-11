@@ -158,6 +158,15 @@ public class ExporterFrame{
                             break;
 
                         case TXT:
+                            TXTExporter txte = new TXTExporter();
+                            if (table_selection == ExporterFrame.RADIO_BUTTON.PHOTO)
+                            {
+                                txte.exportRecords(export_location.getText(), data);
+                            }
+                            else 
+                            {
+                                txte.exportPublications(export_location.getText(), data);
+                            }
                             break;
 
                         default:
