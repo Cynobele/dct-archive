@@ -56,7 +56,7 @@ public class ExporterFrame{
         location_panel.setBorder(BorderFactory.createTitledBorder("Export to..."));
 
         JRadioButton csv_button = new JRadioButton("CSV"); //.csv format
-        JRadioButton xlsx_button = new JRadioButton("XLS"); //.xls format
+        JRadioButton xlsx_button = new JRadioButton("XLSX"); //.xlsx format
         JRadioButton txt_button = new JRadioButton("TXT"); //.txt format
         JRadioButton sql_button = new JRadioButton("SQL"); //.sql format
         ButtonGroup type_group = new ButtonGroup();     //group buttons together
