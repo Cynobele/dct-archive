@@ -61,11 +61,11 @@ public class SQLExporter {
 
             if (i != (table_data.length - 1))
             {
-                pw.println("(" + table_data[i][0] + ", " + table_data[i][1] + ", \"" + table_data[i][2] + "\", \"" + table_data[i][3] + "\", \"" + table_data[i][4] + "\", \"" + caption + "\"),");//appends the string to the file
+                pw.println("(" + table_data[i][0] + ", \"" + table_data[i][1] + "\", \"" + table_data[i][2] + "\", \"" + table_data[i][3] + "\", \"" + table_data[i][4] + "\", \"" + caption + "\"),");//appends the string to the file
             }
             else
             {
-                pw.println("(" + table_data[i][0] + ", " + table_data[i][1] + ", \"" + table_data[i][2] + "\", \"" + table_data[i][3] + "\", \"" + table_data[i][4] + "\", \"" + caption + "\");");//appends the string to the file
+                pw.println("(" + table_data[i][0] + ", \"" + table_data[i][1] + "\", \"" + table_data[i][2] + "\", \"" + table_data[i][3] + "\", \"" + table_data[i][4] + "\", \"" + caption + "\");");//appends the string to the file
             }
         }
 
