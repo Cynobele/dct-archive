@@ -4,7 +4,7 @@ SET time_zone = `+00:00`;
 
 CREATE TABLE IF NOT EXISTS `Records` (
     `PhotoID` int(6) NOT NULL,
-    `PubID` int(2) NOT NULL,
+    `Publication` varchar(4) NOT NULL,
     `Date` varchar(100) NOT NULL,
     `Reference` int(7) NOT NULL,
     `Location` varchar(15) NOT NULL,
@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS `Records` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-INSERT INTO `Records` (`PhotoID`, `PubID`, `Date`, `Reference`, `Location`, `Caption`) VALUES
+INSERT INTO `Records` (`PhotoID`, `Publication`, `Date`, `Reference`, `Location`, `Caption`) VALUES
