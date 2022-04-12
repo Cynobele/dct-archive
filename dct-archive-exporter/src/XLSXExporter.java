@@ -15,7 +15,7 @@ public class XLSXExporter {
     public void WriteFile(Object[][] table_data, String file_path, ExporterFrame.RADIO_BUTTON table){
         String file_name = "/" + table.toString() +"_DCTArchiveExport.xlsx";
         File file = new File(file_path + file_name);
-        String[] photo_headings = {"id", "publication id", "date", "reference", "location", "caption"};
+        String[] photo_headings = {"id", "publication", "date", "reference", "location", "caption"};
         String[] pub_headings = {"publication id", "shortcode", "name"};
         
         XSSFWorkbook workbook = new XSSFWorkbook();
