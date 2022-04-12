@@ -19,7 +19,7 @@ public class Connect {
         try { //attempt connection
         
             Connection conn = connect(); //establish db connection
-            String photo_sql = "SELECT * FROM photo";
+            String photo_sql = "SELECT photo.*, pub.shortcode FROM photo JOIN publication AS pub ON (photo.pub_id = pub.id)";
 
             Statement row_statement = conn.createStatement(); //get the number of rows
             ResultSet row_result = row_statement.executeQuery("SELECT COUNT(*) AS row_count FROM photo");
@@ -32,7 +32,7 @@ public class Connect {
             ResultSetMetaData rsmd = rs.getMetaData();
             int column_count = rsmd.getColumnCount();
 
-            Object[][] data_arr = new Object[row_count][column_count];
+            Object[][] data_arr = new Object[row_count][column_count - 1];
             List<Photo> photo_list = new ArrayList<Photo>();
 
             while(rs.next()){
@@ -45,6 +45,7 @@ public class Connect {
                 photo.setReference(rs.getString(4));
                 photo.setLocation(rs.getString(5));
                 photo.setCaption(rs.getString(6));
+                photo.setShortcode(rs.getString(7));
 
                 photo_list.add(photo); // adds ^this object to the list   
             }
@@ -53,12 +54,13 @@ public class Connect {
                 Photo reader = photo_list.get(i); //access each obj in the list
 
                 data_arr[i][0] = reader.getPhotoId(); //use getters to populate 2D array
-                data_arr[i][1] = reader.getPubId();
+                data_arr[i][1] = reader.getShortcode();
                 data_arr[i][2] = reader.getDate();
                 data_arr[i][3] = reader.getReference();
                 data_arr[i][4] = reader.getLocation();
                 data_arr[i][5] = reader.getCaption();
-            } 
+            }
+
             return data_arr;
         } catch (Exception e){  //will show the error that caused the Try{} to fail
             System.out.println(e.getMessage());

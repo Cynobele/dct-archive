@@ -20,10 +20,10 @@ public class CSVExporter {
 
                     //write headings based on selected table
                     if(table == ExporterFrame.RADIO_BUTTON.PHOTO){
-                        writer.write("id , publication id, date, reference, location, caption");
+                        writer.write("id,publication,date,reference,location,caption");
                     }
                     else if(table == ExporterFrame.RADIO_BUTTON.PUBLICATION){
-                        writer.write("publication id, shortcode, name");
+                        writer.write("publication id,shortcode,name");
                     }
 
                     //loop through 2D array and write values to file

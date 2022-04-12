@@ -43,7 +43,7 @@ public class SQLExporter {
     public void exportRecords(String exportlocation, Object[][] table_data)
     {
        
-        try (FileWriter fw = new FileWriter(exportlocation + "\\Records.sql", true);
+        try (FileWriter fw = new FileWriter(exportlocation + File.separator + "Records.sql", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(bw))
         {
@@ -86,7 +86,7 @@ public class SQLExporter {
     public void exportPublications(String exportlocation, Object[][] table_data)
     {
                 
-        try (FileWriter fw = new FileWriter(exportlocation + "\\Publications.sql", true); 
+        try (FileWriter fw = new FileWriter(exportlocation + File.separator + "Publications.sql", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(bw))
         {

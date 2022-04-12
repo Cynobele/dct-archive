@@ -1,16 +1,13 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter; 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 
 public class TXTExporter {
     
     public void exportRecords(String exportlocation, Object[][] table_data)
     {
-        try (FileWriter fw = new FileWriter(exportlocation + "\\DCTArchive_Records.txt", true);
-        BufferedWriter bw = new BufferedWriter(fw);
-        PrintWriter pw = new PrintWriter(bw))
+        try (FileWriter fw = new FileWriter(exportlocation + File.separator + "DCTArchive_Records.txt", true);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter pw = new PrintWriter(bw))
         {
 
             pw.println("PhotoID, PublicationID, Date, Reference, Location, Caption");
@@ -35,7 +32,7 @@ public class TXTExporter {
 
     public void exportPublications(String exportlocation, Object[][] table_data)
     {
-        try (FileWriter fw = new FileWriter(exportlocation + "\\DCTArchive_Publications.txt", true);
+        try (FileWriter fw = new FileWriter(exportlocation + File.separator + "DCTArchive_Publications.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(bw))
         {

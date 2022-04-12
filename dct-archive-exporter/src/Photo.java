@@ -5,6 +5,7 @@ public class Photo {
 
     private int photo_id;    //primary key
     private int pub_id;      //foreign key
+    private String shortcode;
     private java.util.Date date;
     private String reference;
     private String location;
@@ -52,4 +53,11 @@ public class Photo {
         this.caption = caption;
     }
 
+    public String getShortcode() {
+        return shortcode;
+    }
+
+    public void setShortcode(String shortcode) {
+        this.shortcode = shortcode;
+    }
 }
