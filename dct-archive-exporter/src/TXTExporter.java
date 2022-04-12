@@ -10,7 +10,7 @@ public class TXTExporter {
              PrintWriter pw = new PrintWriter(bw))
         {
 
-            pw.println("PhotoID, PublicationID, Date, Reference, Location, Caption");
+            pw.println("PhotoID, Publication, Date, Reference, Location, Caption");
 
             for (int i=0; i<table_data.length; i++)
             {
