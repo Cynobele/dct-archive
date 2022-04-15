@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        //Start of App class, main function
         
         boolean _running = true;        // true while app is alive, set to false to exit
         boolean _window_active = false; // true when the window activates
